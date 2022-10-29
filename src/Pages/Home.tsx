@@ -30,5 +30,7 @@ const Home = () => {
 export default Home;
 
 const Container = styled.div`
-  background-color: ${({ theme }) => theme.color.main};
+  box-sizing: border-box;
+  margin: 1rem auto;
+  padding: 1rem;
 `;

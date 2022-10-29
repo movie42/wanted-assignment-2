@@ -43,4 +43,7 @@ const ItemList = ({ issues }: IItemListProps) => {
 
 export default ItemList;
 
-const Container = styled.ul``;
+const Container = styled.ul`
+  padding: 0;
+  box-sizing: border-box;
+`;
