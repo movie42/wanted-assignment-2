@@ -6,15 +6,34 @@ const octokit = new Octokit({
   auth: TOKEN
 });
 
-export const getRepoData = async () => {
+export const getRepoData = async (page = 1, per_page = 20) => {
   try {
     const { data } = await octokit.request("GET /repos/{owner}/{repo}/issues", {
       owner: "angular",
       repo: "angular-cli",
       sort: "comments",
       direction: "desc",
-      per_page: 12
+      page,
+      per_page
     });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getRepoWithIssueNumber = async (issue_number: number) => {
+  try {
+    const { data } = await octokit.request(
+      "GET /repos/{owner}/{repo}/issues/{issue_number}",
+      {
+        owner: "angular",
+        repo: "angular-cli",
+        issue_number
+      }
+    );
 
     return data;
   } catch (error) {
