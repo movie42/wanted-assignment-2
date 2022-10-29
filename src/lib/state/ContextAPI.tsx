@@ -1,17 +1,17 @@
 import { createContext, ReactNode, useState } from "react";
 
-interface RepoListProps {
-  number: number;
-  id: number;
-  title: string;
-  user: {
-    id: number;
-    login: string;
-    avatar_url: string;
-    url: string;
+export interface RepoListProps {
+  number?: number;
+  id?: number;
+  title?: string;
+  user?: {
+    id?: number;
+    login?: string;
+    avatar_url?: string;
+    url?: string;
   };
-  created_at: string;
-  comments: number;
+  created_at?: string;
+  comments?: number;
 }
 
 interface RepoDetailProps extends RepoListProps {

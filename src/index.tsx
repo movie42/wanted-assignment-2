@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 
 import App from "./App";
 import { GlobalStyles, theme } from "./lib";
+import { ContextAPIProvider } from "./lib/state/ContextAPI";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,7 +15,9 @@ root.render(
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <GlobalStyles />
-        <App />
+        <ContextAPIProvider>
+          <App />
+        </ContextAPIProvider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
