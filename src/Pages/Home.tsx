@@ -2,12 +2,13 @@ import { getRepoData } from "@/lib";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Endpoints } from "@octokit/types";
+import ItemList from "./ItemList/ItemList";
 
-type listUserReposResponse =
+export type ReposResponse =
   Endpoints["GET /repos/{owner}/{repo}/issues"]["response"];
 
 const Home = () => {
-  const [issues, setIssues] = useState<listUserReposResponse["data"] | null>();
+  const [issues, setIssues] = useState<ReposResponse["data"] | null>();
 
   const getIssues = async () => {
     const response = await getRepoData();
@@ -21,9 +22,7 @@ const Home = () => {
 
   return (
     <Container>
-      {issues?.map((issue) => (
-        <div key={issue.id}>{issue.id}</div>
-      ))}
+      <ItemList issues={issues} />
     </Container>
   );
 };
