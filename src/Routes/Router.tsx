@@ -1,8 +1,8 @@
 import React from "react";
 
-import MainLayout from "@/Components/Layouts/MainLayout";
-import Detail from "@/Pages/Detail";
-import Home from "@/Pages/Home";
+import { MainLayout } from "@/Components";
+import { Detail, Home } from "@/Pages";
+
 import { Route, Routes } from "react-router-dom";
 
 const Router = () => {

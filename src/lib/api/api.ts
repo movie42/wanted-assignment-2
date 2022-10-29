@@ -10,7 +10,10 @@ export const getRepoData = async () => {
   try {
     const { data } = await octokit.request("GET /repos/{owner}/{repo}/issues", {
       owner: "angular",
-      repo: "angular-cli"
+      repo: "angular-cli",
+      sort: "comments",
+      direction: "desc",
+      per_page: 12
     });
 
     return data;
