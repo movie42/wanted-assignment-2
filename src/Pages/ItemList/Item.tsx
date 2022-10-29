@@ -1,20 +1,9 @@
+import { RepoListProps } from "@/lib";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-interface IItemProps {
-  number: number;
-  id: number;
-  title: string;
-  user: {
-    id: number;
-    login: string;
-    avatar_url: string;
-    url: string;
-  } | null;
-  created_at: string;
-  comments: number;
-}
+type IItemProps = RepoListProps;
 
 const Item = ({
   number,
