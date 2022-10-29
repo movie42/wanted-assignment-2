@@ -24,8 +24,9 @@ interface IItemListProps {
 const ItemList = ({ issues }: IItemListProps) => {
   return (
     <Container>
-      {issues?.map(
-        ({ id, number, title, user, created_at, comments, state }) => (
+      {issues
+        ?.filter((issue) => issue.state === "open")
+        .map(({ id, number, title, user, created_at, comments }) => (
           <Item
             key={id}
             id={id}
@@ -34,10 +35,8 @@ const ItemList = ({ issues }: IItemListProps) => {
             user={user}
             created_at={created_at}
             comments={comments}
-            state={state}
           />
-        )
-      )}
+        ))}
     </Container>
   );
 };

@@ -14,7 +14,6 @@ interface IItemProps {
   } | null;
   created_at: string;
   comments: number;
-  state: string;
 }
 
 const Item = ({
@@ -23,21 +22,21 @@ const Item = ({
   title,
   created_at,
   comments,
-  user,
-  state
+  user
 }: IItemProps) => {
   return (
     <Container data-id={id} data-issue-number={number}>
       <Link to={`/${number}`}>
-        <h1>{title}</h1>
-        <span>{number}</span>
-        <span>{state}</span>
-        <p>{user?.id}</p>
-        <p>{user?.login}</p>
-        <p>{user?.avatar_url}</p>
-        <p>{created_at}</p>
-        <p>{comments}</p>
+        <h1>{`#${number} ${title}`}</h1>
+        <p>코멘트: {comments}</p>
       </Link>
+      <InfoContainer data-user-id={user?.id}>
+        <span>
+          작성자:
+          <a href={`https://github.com/${user?.login}`}>{user?.login}</a>
+        </span>
+        <p>작성일: {created_at}</p>
+      </InfoContainer>
     </Container>
   );
 };
@@ -45,3 +44,5 @@ const Item = ({
 export default Item;
 
 const Container = styled.li``;
+
+const InfoContainer = styled.div``;
