@@ -6,24 +6,16 @@ const octokit = new Octokit({
   auth: TOKEN
 });
 
-export const getData = async () => {
-  const response = async () => {
-    try {
-      const { data } = await octokit.request(
-        "GET /repos/{owner}/{repo}/issues",
-        {
-          owner: "angular",
-          repo: "angular-cli"
-        }
-      );
+export const getRepoData = async () => {
+  try {
+    const { data } = await octokit.request("GET /repos/{owner}/{repo}/issues", {
+      owner: "angular",
+      repo: "angular-cli"
+    });
 
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const data = await response();
-
-  return data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
