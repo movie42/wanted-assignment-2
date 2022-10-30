@@ -5,7 +5,6 @@ import Item from "./Item";
 
 interface IItemListProps {
   issues?: RepoListProps[];
-  getIssues?: (page: number) => void;
 }
 
 const ItemList = ({ issues }: IItemListProps) => {

@@ -1,5 +1,5 @@
 import { Endpoints } from "@octokit/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getRepoData } from "../api/api";
 
 type ReposResponse = Endpoints["GET /repos/{owner}/{repo}/issues"]["response"];

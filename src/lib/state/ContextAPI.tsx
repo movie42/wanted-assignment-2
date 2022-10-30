@@ -37,22 +37,6 @@ interface ContextAPIProps {
   children: ReactNode;
 }
 
-const issueDefaultValue = [
-  {
-    number: 0,
-    id: 0,
-    title: "",
-    user: {
-      id: 0,
-      login: "",
-      avatar_url: "",
-      url: ""
-    },
-    created_at: "",
-    comments: 0
-  }
-];
-
 const detailDefaultValue = {
   number: 0,
   id: 0,

@@ -1,4 +1,4 @@
-import { Endpoints, RequestError } from "@octokit/types";
+import { Endpoints } from "@octokit/types";
 import { Octokit } from "octokit";
 
 export type ReposResponse =
