@@ -69,7 +69,7 @@ const detailDefaultValue = {
 };
 
 export const ContextAPIProvider = ({ children }: ContextAPIProps) => {
-  const [issues, setIssues] = useState<RepoListProps[]>(issueDefaultValue);
+  const [issues, setIssues] = useState<RepoListProps[]>([]);
   const [detail, setDetail] = useState<RepoDetailProps>(detailDefaultValue);
 
   const issueValue = {
