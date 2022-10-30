@@ -6,7 +6,9 @@ const useMarkdownToHTML = () => {
   const [html, setHtml] = useState("");
 
   const markdownToHtml = async (markdown: string) => {
-    const result = await remark().use(remarkHtml).process(markdown);
+    const result = await remark()
+      .use(remarkHtml, { sanitize: false })
+      .process(markdown);
     setHtml(result.toString());
   };
 

@@ -11,12 +11,15 @@ const Home = () => {
 
   const { issues, setIssues } = useContext(IssueListContextAPI);
 
-  const observerRef = useIntersect(async (entry, observer) => {
-    if (!isFetching) {
-      fetchDatas(page);
-    }
-    observer.unobserve(entry.target);
-  });
+  const observerRef = useIntersect(
+    async (entry, observer) => {
+      if (!isFetching) {
+        fetchDatas(page);
+      }
+      observer.unobserve(entry.target);
+    },
+    { threshold: 1.0 }
+  );
 
   const map = () => {
     const issueList = data
@@ -52,7 +55,7 @@ const Home = () => {
         <>
           <ItemList issues={issues} />
           {isLoading ? <div>isLoading</div> : null}
-          <ObserverContainer ref={observerRef}>loading</ObserverContainer>
+          <ObserverContainer ref={observerRef} />
         </>
       )}
     </Container>
@@ -68,5 +71,5 @@ const Container = styled.div`
 `;
 
 const ObserverContainer = styled.div`
-  background-color: red;
+  height: 2rem;
 `;

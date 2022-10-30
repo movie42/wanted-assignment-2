@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Endpoints } from "@octokit/types";
 import { getRepoWithIssueNumber } from "../api/api";
 
