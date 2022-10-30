@@ -1,45 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { getRepoWithIssueNumber } from "@/lib/api/api";
-import { Endpoints } from "@octokit/types";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import useMarkdownToHTML from "@/lib/hooks/useMarkdownToHTML";
 
-export type ReposResponse =
-  Endpoints["GET /repos/{owner}/{repo}/issues/{issue_number}"]["response"];
+import { useMarkdownToHTML, useGetDetail } from "@/lib";
 
 const Detail = () => {
-  const [issue, setIssue] = useState<ReposResponse["data"] | null>(null);
   const { issue_number } = useParams();
 
-  const { html } = useMarkdownToHTML(issue?.body ? issue.body : "");
+  const { isSuccess, isLoading, fetchData, data } = useGetDetail();
 
-  const response = async (issue_number: number) => {
-    const data = await getRepoWithIssueNumber(issue_number);
-    setIssue(data);
-  };
+  const { markdownToHtml, html } = useMarkdownToHTML();
 
   useEffect(() => {
     if (issue_number) {
-      response(Number(issue_number));
+      fetchData(Number(issue_number));
     }
   }, []);
 
-  return (
+  useEffect(() => {
+    if (isSuccess && data?.body) {
+      markdownToHtml(data?.body);
+    }
+  }, [isSuccess]);
+
+  return isLoading ? (
+    <div>로딩중</div>
+  ) : (
     <Container>
       <IssueHeaderContainer>
         <AvatarContainer>
-          <Image src={issue?.user?.avatar_url} />
+          <Image src={data?.user?.avatar_url} />
         </AvatarContainer>
         <IssueHeader>
           <div>
-            <h1>{`#${issue?.number} ${issue?.title}`}</h1>
+            <h1>{`#${data?.number} ${data?.title}`}</h1>
             <IssueHeaderInfo>
-              <span>작성자: {issue?.user?.login}</span>
-              <span>작성일: {issue?.created_at}</span>
+              <span>작성자: {data?.user?.login}</span>
+              <span>작성일: {data?.created_at}</span>
             </IssueHeaderInfo>
           </div>
-          <span>코멘트: {issue?.comments}</span>
+          <span>코멘트: {data?.comments}</span>
         </IssueHeader>
       </IssueHeaderContainer>
       <IssueBody dangerouslySetInnerHTML={{ __html: html }} />

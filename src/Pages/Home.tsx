@@ -1,25 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import ItemList from "./ItemList/ItemList";
-import { getRepoData, useIntersect } from "@/lib";
+import { useGet, useIntersect } from "@/lib";
 import { IssueListContextAPI } from "@/lib/state/ContextAPI";
 
 const Home = () => {
-  // const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const { data, isSuccess, isFetching, isLoading, isError, fetchDatas } =
+    useGet();
+
   const { issues, setIssues } = useContext(IssueListContextAPI);
 
   const observerRef = useIntersect(async (entry, observer) => {
+    if (!isFetching) {
+      fetchDatas(page);
+    }
     observer.unobserve(entry.target);
-
-    console.log("infinity", page);
-    // getIssues(page);
-    setPage((pre) => pre + 1);
   });
 
-  const getIssues = async (page = 0) => {
-    const response = await getRepoData(page);
-
-    const issueList = response
+  const map = () => {
+    const issueList = data
       ?.filter((issue) => issue.state === "open")
       .map((issue) => ({
         id: issue?.id,
@@ -34,16 +34,27 @@ const Home = () => {
         created_at: issue?.created_at,
         comments: issue?.comments
       }));
+    setIssues((pre) => [...pre, ...issueList]);
   };
 
   useEffect(() => {
-    getIssues();
-  }, []);
+    if (isSuccess) {
+      setPage((pre) => pre + 1);
+      map();
+    }
+  }, [isSuccess]);
 
   return (
     <Container>
-      <ItemList issues={issues} getIssues={getIssues} />
-      <ObserverContainer ref={observerRef}>loading</ObserverContainer>
+      {isError ? (
+        <div>에러가 발생했습니다. 나중에 다시 시도해주세요.</div>
+      ) : (
+        <>
+          <ItemList issues={issues} />
+          {isLoading ? <div>isLoading</div> : null}
+          <ObserverContainer ref={observerRef}>loading</ObserverContainer>
+        </>
+      )}
     </Container>
   );
 };
