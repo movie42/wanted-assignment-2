@@ -1,7 +1,7 @@
 import React from "react";
 
 import { MainLayout } from "@/Components";
-import { Detail, Home } from "@/Pages";
+import { Detail, Home, NotFoundError } from "@/Pages";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/:issue_number" element={<Detail />} />
       </Route>
+      <Route path="*" element={<NotFoundError />} />
     </Routes>
   );
 };

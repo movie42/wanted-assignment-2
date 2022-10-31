@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useMarkdownToHTML, useGetDetail } from "@/lib";
 import Markdown from "react-markdown";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 const Detail = () => {
   const { issue_number } = useParams();
@@ -12,7 +12,7 @@ const Detail = () => {
   const style = docco;
   const { isSuccess, isLoading, fetchData, data } = useGetDetail();
 
-  const { markdownToHtml, html } = useMarkdownToHTML();
+  const { markdownToHtml } = useMarkdownToHTML();
 
   useEffect(() => {
     if (issue_number) {
@@ -48,7 +48,7 @@ const Detail = () => {
       {data?.body ? (
         <IssueBody
           components={{
-            code({ node, inline, className, children, ...props }) {
+            code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
 
               return !inline && match ? (

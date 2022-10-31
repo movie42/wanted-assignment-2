@@ -16,6 +16,7 @@ export const getRepoData = async (page = 0, per_page = 20) => {
     {
       owner: "angular",
       repo: "angular-cli",
+      state: "open",
       sort: "comments",
       direction: "desc",
       page,
