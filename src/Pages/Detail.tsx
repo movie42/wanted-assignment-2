@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useGetDetail } from "@/lib";
 
 import MarkdownContainer from "./Details/MarkdownContainer";
+import LoadingSpinner from "@/Components/Loading/LoadingSpinner";
 
 const Detail = () => {
   const { issue_number } = useParams();
@@ -16,7 +17,7 @@ const Detail = () => {
   }, []);
 
   return isLoading ? (
-    <div>로딩중</div>
+    <LoadingSpinner />
   ) : (
     <Container>
       <IssueHeaderContainer>
