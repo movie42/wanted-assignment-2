@@ -1,30 +1,19 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useMarkdownToHTML, useGetDetail } from "@/lib";
-import Markdown from "react-markdown";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { useGetDetail } from "@/lib";
+
+import MarkdownContainer from "./Details/MarkdownContainer";
 
 const Detail = () => {
   const { issue_number } = useParams();
-
-  const style = docco;
-  const { isSuccess, isLoading, fetchData, data } = useGetDetail();
-
-  const { markdownToHtml } = useMarkdownToHTML();
+  const { isLoading, fetchData, data } = useGetDetail();
 
   useEffect(() => {
     if (issue_number) {
       fetchData(Number(issue_number));
     }
   }, []);
-
-  useEffect(() => {
-    if (isSuccess && data?.body) {
-      markdownToHtml(data?.body);
-    }
-  }, [isSuccess]);
 
   return isLoading ? (
     <div>로딩중</div>
@@ -46,33 +35,10 @@ const Detail = () => {
         </IssueHeader>
       </IssueHeaderContainer>
       {data?.body ? (
-        <IssueBody
-          components={{
-            code({ inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || "");
-
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  style={style}
-                  PreTag="div"
-                  language={match[1]}
-                  children={String(children).replace(/\n$/, "")}
-                  {...props}
-                />
-              ) : (
-                <code className={className ? className : ""} {...props}>
-                  {children}
-                </code>
-              );
-            }
-          }}
-        >
-          {data?.body}
-        </IssueBody>
+        <MarkdownContainer markdown={data?.body} />
       ) : (
         <div>본문을 불러올 수 없습니다.</div>
       )}
-      {/* <IssueBody dangerouslySetInnerHTML={{ __html: html }} /> */}
     </Container>
   );
 };
@@ -127,28 +93,5 @@ const IssueHeaderInfo = styled.div`
     &:nth-child(2) {
       margin-left: 1rem;
     }
-  }
-`;
-const IssueBody = styled(Markdown)`
-  h1 {
-    font-size: 2.4rem;
-    margin: 2rem 0;
-  }
-  h2 {
-    font-size: 2.2rem;
-    margin: 1.8rem 0;
-  }
-  h3 {
-    font-size: 2rem;
-    margin: 1.6rem 0;
-  }
-  h4 {
-    font-size: 1.8rem;
-    margin: 1.6rem 0;
-  }
-  p {
-    font-size: 1.6rem;
-    margin: 1.6rem 0;
-    line-height: 130%;
   }
 `;
