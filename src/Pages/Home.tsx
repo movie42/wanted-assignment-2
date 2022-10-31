@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ItemList from "./ItemList/ItemList";
 import { useGet, useIntersect } from "@/lib";
 import { IssueListContextAPI } from "@/lib/state/ContextAPI";
+import LoadingSpinner from "@/Components/Loading/LoadingSpinner";
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -54,7 +55,7 @@ const Home = () => {
       ) : (
         <>
           <ItemList issues={issues} />
-          {isLoading ? <div>isLoading</div> : null}
+          {isLoading ? <LoadingSpinner /> : null}
           <ObserverContainer ref={observerRef} />
         </>
       )}
